@@ -14,8 +14,8 @@ This project uses `uv` to manage Python packages.
 
 ## Develop a demo weather app
 
-> ⚠️ **Warning:** *Assume you are familiar to Django development,* 
-> *the development process is ignored.*
+> ⚠️ **Warning:** *Assuming you are familiar with Django development,* 
+> *the application development process is ignored.*
 
 Create a weather app with simulated data, please look into the source code.
 
