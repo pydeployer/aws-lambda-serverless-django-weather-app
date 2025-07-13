@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}Weather in {{ city }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+
+    <!-- Today's Conditions Hero -->
+    {% if weather %}
+    <section class="py-5 px-4 mb-5 text-dark rounded shadow" style="background: linear-gradient(to right, #f3e5f5, #e1bee7);">
+
+        <div class="text-center">
+            <h1 class="display-4">{{ city }}</h1>
+            <h2 class="mt-4">{{ weather.current.temp_c }}</h2>
+            <p class="lead">
+                {{ weather.current.condition.text }} {{ weather.current.condition.icon }}
+            </p>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-4 text-center">
+                <h5>💧 Humidity</h5>
+                <p>{{ weather.current.humidity }}</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h5>💨 Wind</h5>
+                <p>{{ weather.current.wind_kph }}</p>
+                <p>{{ weather.current.wind_direction }}</p>
+            </div>
+        </div>
+    </section>
+
+    {% else %}
+    <div class="alert alert-warning">Current weather data not available.</div>
+    {% endif %}
+
+    <!-- Forecast -->
+    <h2 class="h4 mb-3">📅 10-Day Forecast</h2>
+    {% if forecast_data %}
+        <div class="table-responsive mb-4">
+            <table class="table table-striped table-bordered text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Condition</th>
+                        <th>Max Temp (°C)</th>
+                        <th>Min Temp (°C)</th>
+                        <th>Precipitation (mm)</th>
+                        <th>Wind Speed (km/h)</th>
+                        <th>UV Index</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in forecast_data %}
+                    <tr>
+                        <td>{{ day.date }}</td>
+                        <td>{{ day.weather_description }}</td>
+                        <td>{{ day.temp_max }}</td>
+                        <td>{{ day.temp_min }}</td>
+                        <td>{{ day.precipitation }}</td>
+                        <td>{{ day.wind_speed }}</td>
+                        <td>{{ day.uv_index }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <canvas id="forecastChart" height="150"></canvas>
+    {% else %}
+        <p>No forecast data available.</p>
+    {% endif %}
+
+    <!-- Historical -->
+    <h2 class="h4 mt-5 mb-3">📈 Last 7 Days Historical Weather</h2>
+    {% if historical_data %}
+        <div class="table-responsive mb-4">
+            <table class="table table-striped table-bordered text-center align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Condition</th>
+                        <th>Max Temp (°C)</th>
+                        <th>Min Temp (°C)</th>
+                        <th>Precipitation (mm)</th>
+                        <th>Wind Speed (km/h)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in historical_data %}
+                    <tr>
+                        <td>{{ day.date }}</td>
+                        <td>{{ day.weather_description }}</td>
+                        <td>{{ day.temp_max }}</td>
+                        <td>{{ day.temp_min }}</td>
+                        <td>{{ day.precipitation }}</td>
+                        <td>{{ day.wind_speed }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <canvas id="historyChart" height="150"></canvas>
+    {% else %}
+        <p>No historical data available.</p>
+    {% endif %}
+
+    <!-- Popular Cities -->
+    <h3 class="h5 mt-5">🌍 Popular Cities</h3>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='beijing' %}">🇨🇳 Beijing</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='new-york' %}">🇺🇸 New York</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='london' %}">🇬🇧 London</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='tokyo' %}">🇯🇵 Tokyo</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='paris' %}">🇫🇷 Paris</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='sydney' %}">🇦🇺 Sydney</a></li>
+        <li class="list-inline-item"><a href="{% url 'city_weather' city='san-francisco' %}">🇺🇸 San Francisco</a></li>
+    </ul>
+
+</div>
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Embed JSON safely -->
+{{ forecast_data|json_script:"forecast-data" }}
+{{ historical_data|json_script:"historical-data" }}
+
+<script>
+    const forecastData = JSON.parse(document.getElementById("forecast-data").textContent);
+    const historicalData = JSON.parse(document.getElementById("historical-data").textContent);
+
+    if (forecastData.length) {
+        const forecastCtx = document.getElementById('forecastChart').getContext('2d');
+        new Chart(forecastCtx, {
+            type: 'line',
+            data: {
+                labels: forecastData.map(day => day.date),
+                datasets: [
+                    {
+                        label: 'Max Temp (°C)',
+                        data: forecastData.map(day => day.temp_max),
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false
+                    },
+                    {
+                        label: 'Min Temp (°C)',
+                        data: forecastData.map(day => day.temp_min),
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: '10-Day Temperature Forecast' }
+                }
+            }
+        });
+    }
+
+    if (historicalData.length) {
+        const historyCtx = document.getElementById('historyChart').getContext('2d');
+        new Chart(historyCtx, {
+            type: 'line',
+            data: {
+                labels: historicalData.map(day => day.date),
+                datasets: [
+                    {
+                        label: 'Max Temp (°C)',
+                        data: historicalData.map(day => day.temp_max),
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        fill: false
+                    },
+                    {
+                        label: 'Min Temp (°C)',
+                        data: historicalData.map(day => day.temp_min),
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: 'Last 7 Days Historical Temperatures' }
+                }
+            }
+        });
+    }
+</script>
+
+{% endblock %}

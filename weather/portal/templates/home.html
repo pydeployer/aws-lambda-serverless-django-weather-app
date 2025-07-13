@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Weather App - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+  <h1>Stay Ahead of the Weather</h1>
+  <p>Get accurate, real-time weather forecasts for any location worldwide. Plan your day with confidence using our comprehensive weather data.</p>
+</div>
+
+{% if weather %}
+<div class="weather-card">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <h3 class="mb-4">Current Weather in San Francisco</h3>
+      <div class="row align-items-center mb-4">
+        <div class="col-auto">
+          <div class="temperature-display">{{ weather.current.temp_c }}</div>
+        </div>
+        <div class="col">
+          <div class="condition-text">{{ weather.current.condition.text }}</div>
+          <div class="opacity-75">Feels like {{ weather.current.temp_c }}</div>
+        </div>
+      </div>
+      
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="weather-detail">
+            <div class="label">Humidity</div>
+            <div class="value">{{ weather.current.humidity|default:"N/A" }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="weather-detail">
+            <div class="label">Wind Speed</div>
+            <div class="value">{{ weather.current.wind_kph|default:"N/A" }}</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="weather-detail">
+            <div class="label">Last Updated</div>
+            <div class="value">Just now</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-4 text-center">
+      <div class="weather-icon">
+        {% if weather.current.condition.text == "Clear sky" %}
+          ☀️
+        {% elif weather.current.condition.text == "Mainly clear" %}
+          🌤️
+        {% elif weather.current.condition.text == "Partly cloudy" %}
+          ⛅
+        {% elif weather.current.condition.text == "Overcast" %}
+          ☁️
+        {% elif "rain" in weather.current.condition.text|lower %}
+          🌧️
+        {% elif "snow" in weather.current.condition.text|lower %}
+          ❄️
+        {% elif "thunder" in weather.current.condition.text|lower %}
+          ⛈️
+        {% elif "fog" in weather.current.condition.text|lower %}
+          🌫️
+        {% elif "drizzle" in weather.current.condition.text|lower %}
+          🌦️
+        {% else %}
+          🌤️
+        {% endif %}
+      </div>
+      <div class="h5 mb-0">San Francisco, CA</div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="alert alert-custom" role="alert">
+  <h4 class="alert-heading">⚠️ Weather Data Unavailable</h4>
+  <p>We're having trouble fetching the current weather data. Please try again later.</p>
+  <hr>
+  <p class="mb-0">Check your internet connection or try refreshing the page.</p>
+</div>
+{% endif %}
+
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/beijing"><span class="emoji">🇨🇳</span> Beijing, China</a></h3>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/new-york"><span class="emoji">🇺🇸</span> New York, NY</a></h3>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/london"><span class="emoji">🇬🇧</span> London, UK</a></h3>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/tokyo"><span class="emoji">🇯🇵</span> Tokyo, Japan</a></h3>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/paris"><span class="emoji">🇫🇷</span> Paris, France</a></h3>
+    </div>
+  </div>
+  <div class="col">
+    <div class="section-card h-100 text-center">
+      <h3><a href="/weather/sydney"><span class="emoji">🇦🇺</span> Sydney, Australia</a></h3>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mt-2">
+  <div class="col-md-6">
+    <div class="section-card">
+      <h2>🌡️ Weather Tips</h2>
+      <p>Learn about different weather phenomena and understand what various conditions mean for your daily activities.</p>
+      <div class="row">
+        <div class="col-12">
+          <ul class="feature-list">
+            <li><a href="{% url 'temperature_article' %}"><span class="emoji">🌡️</span>Temperature & Heat Index</a></li>
+            <li><a href="{% url 'precipitation_article' %}"><span class="emoji">🌧️</span>Rain & Snow Forecasts</a></li>
+            <li><a href="{% url 'wind_article' %}"><span class="emoji">💨</span>Wind Speed & Direction</a></li>
+            <li><a href="{% url 'uv_article' %}"><span class="emoji">☀️</span>UV Index & Sun Protection</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 text-center">
+    <img src="{% static 'images/sunny.png' %}" alt="Weather Hero Image" class="img-fluid rounded shadow" style="max-width: 96%; height: auto;">
+  </div>
+</div>
+{% endblock %}

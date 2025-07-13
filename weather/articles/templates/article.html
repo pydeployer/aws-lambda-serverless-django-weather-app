@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - Weather App{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+  <h1>{{ article.icon }} {{ article.title }}</h1>
+  <p class="fs-5">{{ article.intro }}</p>
+</div>
+
+<div class="article-content">
+  {% for section in article.sections %}
+    <div class="section mb-4">
+      <h3 class="mb-3">{{ section.title }}</h3>
+      <p class="fs-6 text-muted">{{ section.content }}</p>
+    </div>
+    {% if not forloop.last %}
+      <hr class="my-4">
+    {% endif %}
+  {% endfor %}
+</div>
+
+<div class="mt-5">
+  <a href="/" class="btn btn-primary">← Back to Weather App</a>
+</div>
+
+<style>
+  .article-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .section {
+    margin-bottom: 2rem;
+  }
+  
+  .section h3 {
+    color: #0984e3;
+    border-bottom: 2px solid #74b9ff;
+    padding-bottom: 0.5rem;
+  }
+  
+  .section p {
+    line-height: 1.6;
+    text-align: justify;
+  }
+</style>
+{% endblock %}
