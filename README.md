@@ -28,4 +28,4 @@ $ python manage runserver
 
 Then, visit the website on your local machine - [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-![App Screenshot](./docs/app1.png)
+![App Screenshot](./assets/app1.png)
