@@ -10,15 +10,22 @@ This project uses `uv` to manage Python packages.
 * Run `uv venv .venv` to create a Python virtual environment.
 * Run `uv add django` to add Django into pyproject's dependencies.
 * Run `uv sync` to install packages in virtual environment.
-* Run `source .venv/bin/activate` to active the environment.
 
 
 ## Develop a demo weather app
 
+> ⚠️ **Warning:** *Assume you are familiar to Django development,* 
+> *the development process is ignored.*
 
-Create a weather app with simulated weather data, please see the source code.
+Create a weather app with simulated data, please look into the source code.
 
+Activate the Python virtual environment and run Django dev server,
+```bash
+$ source .venv/bin/activate
 
-Then activate the Python virtual environment and visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
+$ python manage runserver
+```
+
+Then, visit the website on your local machine - [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ![App Screenshot](./docs/app1.png)
