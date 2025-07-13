@@ -20,3 +20,5 @@ Create a weather app with simulated weather data, please see the source code.
 
 
 Then activate the Python virtual environment and visit [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+![App Screenshot](./docs/app.png)
