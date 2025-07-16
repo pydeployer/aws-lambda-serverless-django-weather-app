@@ -2,6 +2,7 @@ import logging
 from datetime import date, timedelta
 
 from django.shortcuts import render
+from weather.portal.models import City
 from weather.portal.utils import FakeWeatherAPI 
 
 logger = logging.getLogger(__name__)
@@ -35,18 +36,13 @@ def city_weather(request, city):
     """
     Combined current, forecast, and historical weather using the fake weather API.
     """
-    city_coords = {
-        'beijing': (39.9042, 116.4074),
-        'new-york': (40.7128, -74.0060),
-        'london': (51.5074, -0.1278),
-        'tokyo': (35.6762, 139.6503),
-        'paris': (48.8566, 2.3522),
-        'sydney': (-33.8688, 151.2093),
-        'san-francisco': (37.7749, -122.4194),
-    }
+    try:
+        city_object = City.objects.get(name=city.replace('-', ' ').title())
+    except City.DoesNotExist:
+        logger.error(f"City '{city}' not found in the database.")
+        return render(request, '404.html', {'error': 'City not found.'})
 
-    lat, lon = city_coords.get(city.lower(), (37.7749, -122.4194))
-
+    lat, lon = city_object.lat, city_object.lon
     # Current Weather
     current_data = fake_api.get_forecast(lat, lon)
     current = current_data.get('current', {})
@@ -101,7 +97,7 @@ def city_weather(request, city):
         'forecast_data': forecast_data,
         'historical_data': historical_data,
         'city': city.replace('-', ' ').title(),
-        'popular_cities': list(city_coords.keys()),
+        'popular_cities': list(City.objects.values_list('name', flat=True).order_by('name')),
     }
 
     return render(request, 'city.html', context)

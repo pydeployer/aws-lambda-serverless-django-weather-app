@@ -1,0 +1,72 @@
+[
+{
+  "model": "portal.city",
+  "pk": 1,
+  "fields": {
+    "name": "Beijing",
+    "country": "China",
+    "lat": 39.9042,
+    "lon": 116.4074
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 2,
+  "fields": {
+    "name": "New York",
+    "country": "USA",
+    "lat": 40.7128,
+    "lon": -74.006
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 3,
+  "fields": {
+    "name": "London",
+    "country": "UK",
+    "lat": 51.5074,
+    "lon": -0.1278
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 4,
+  "fields": {
+    "name": "Tokyo",
+    "country": "Japan",
+    "lat": 35.6762,
+    "lon": 139.6503
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 5,
+  "fields": {
+    "name": "Paris",
+    "country": "France",
+    "lat": 48.8566,
+    "lon": 2.3522
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 6,
+  "fields": {
+    "name": "Sydney",
+    "country": "Austrilia",
+    "lat": -33.8688,
+    "lon": 151.2093
+  }
+},
+{
+  "model": "portal.city",
+  "pk": 7,
+  "fields": {
+    "name": "San Francisco",
+    "country": "USA",
+    "lat": 37.7749,
+    "lon": -122.4194
+  }
+}
+]
