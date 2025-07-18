@@ -7,16 +7,16 @@
 
     <!-- Today's Conditions Hero -->
     {% if weather %}
-    <section class="py-5 px-4 mb-5 text-dark rounded shadow" style="background: linear-gradient(to right, #f3e5f5, #e1bee7);">
+    <section class="py-5 px-4 mb-5 text-dark rounded shadow" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
 
-        <div class="text-center">
+        <div class="text-center text-white">
             <h1 class="display-4">{{ city }}</h1>
             <h2 class="mt-4">{{ weather.current.temp_c }}</h2>
             <p class="lead">
                 {{ weather.current.condition.text }} {{ weather.current.condition.icon }}
             </p>
         </div>
-        <div class="row justify-content-center mt-4">
+        <div class="row justify-content-center mt-4 text-white">
             <div class="col-md-4 text-center">
                 <h5>💧 Humidity</h5>
                 <p>{{ weather.current.humidity }}</p>
