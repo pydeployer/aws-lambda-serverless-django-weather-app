@@ -1,0 +1,13 @@
+{
+    "prod": {
+        "project_name": "aws-lambda-serverless-zappa-django-weather-app",
+        "profile_name": "default",
+        "aws_region": "us-west-1",
+        "s3_bucket": "aws-lambda-serverless-zappa-django-weather-app",
+        "manage_roles": false,
+        "role_name": "zappa-lambda-execution-role",
+        "runtime": "python3.13",
+        "django_settings": "weather.settings.prod",
+        "app_function": "weather.wsgi.application"
+    }
+}

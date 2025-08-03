@@ -87,32 +87,32 @@
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/beijing"><span class="emoji">🇨🇳</span> Beijing, China</a></h3>
+      <h3><a href="{% url 'city_weather' city='beijing' %}"><span class="emoji">🇨🇳</span> Beijing, China</a></h3>
     </div>
   </div>
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/new-york"><span class="emoji">🇺🇸</span> New York, USA</a></h3>
+      <h3><a href="{% url 'city_weather' city='new-york' %}"><span class="emoji">🇺🇸</span> New York, USA</a></h3>
     </div>
   </div>
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/london"><span class="emoji">🇬🇧</span> London, UK</a></h3>
+      <h3><a href="{% url 'city_weather' city='london' %}"><span class="emoji">🇬🇧</span> London, UK</a></h3>
     </div>
   </div>
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/tokyo"><span class="emoji">🇯🇵</span> Tokyo, Japan</a></h3>
+      <h3><a href="{% url 'city_weather' city='tokyo' %}"><span class="emoji">🇯🇵</span> Tokyo, Japan</a></h3>
     </div>
   </div>
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/paris"><span class="emoji">🇫🇷</span> Paris, France</a></h3>
+      <h3><a href="{% url 'city_weather' city='paris' %}"><span class="emoji">🇫🇷</span> Paris, France</a></h3>
     </div>
   </div>
   <div class="col">
     <div class="section-card h-100 text-center">
-      <h3><a href="/weather/sydney"><span class="emoji">🇦🇺</span> Sydney, Australia</a></h3>
+      <h3><a href="{% url 'city_weather' city='sydney' %}"><span class="emoji">🇦🇺</span> Sydney, Australia</a></h3>
     </div>
   </div>
 </div>
